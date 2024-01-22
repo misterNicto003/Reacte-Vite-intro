@@ -1,3 +1,5 @@
 export  {default as Button } from"./Button/Button"
 export {default as Header } from"./Header/Header"
 export {default as WayToTeach } from"./WayToTeach/WayToTeach"
+export {default as TeachingSection } from"./TeachingSection/TeachingSection"
+export {default as DifferencesSection } from".//TeachingSection/DifferencesSection"
