@@ -1,19 +1,17 @@
 import React from "react";
-import "./Button.css";
+import cls from"./Button.module.scss";
 
-const Button = ({ children, onClick,isActive } ) => {
+const Button = ({ children, isActive, ...props } ) => {
 
-  // let classes = 'button'
-  
-  // if (isActive) classes +=' active'
  
 
   return (
-    <button className={
-      // classes
-      isActive? 'button active': 'button'
+    <button 
+    {...props}
+    className={
+      
+      isActive? `${cls.button} ${cls.active}`: cls.button
     }
-    onClick= {onClick}
     >
       {children}
     </button>
