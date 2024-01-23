@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DifferencesSection,
+  EffectSection,
   Header,
   IntroSection,
   TabSection,
@@ -9,30 +10,35 @@ import {
 import FreedBackSeption from "./component/FreedBackSeption/FreedBackSeption";
 
 function App() {
-  const [tab, setTab] = useState("feedback");
+  const [tab, setTab] = useState("effect");
+  const [visible, setVisible] = useState(true);
 
-  const active = () =>{
-    setTab (active)
-  }
+  const active = () => {
+    setTab(active);
+  };
+
+  // useEffect(()=>{
+  //   setTimeout(()=>{
+  //     setVisible(false)
+  //   },3000)
+  // },[])
   return (
     <>
-      <Header />
+    {visible && <Header />}
+      {/* <Header /> */}
       <main>
         <IntroSection />
-        <TabSection active={tab} onChanch={ setTab} />
+        <TabSection active={tab} onChanch={setTab} />
 
-        {tab === 'main' && (
+        {tab === "main" && (
           <>
             <TeachingSection />
             <DifferencesSection />
           </>
         )}
 
-        {tab === 'feedback' && (
-          <>
-            <FreedBackSeption />
-          </>
-        )}
+        {tab === "feedback" && <FreedBackSeption />}
+        {tab === "effect" && <EffectSection />}
       </main>
     </>
   );

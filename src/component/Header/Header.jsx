@@ -1,21 +1,26 @@
-import React, { useState } from 'react'
-import "./Header.css"
+import React, { useEffect, useState } from "react";
+import "./Header.css";
 
 const Header = () => {
+  const [now, setNow] = useState(new Date());
 
-  const [now, setNow] = useState (new Date())
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 1000);
 
-
-  setInterval(()=>setNow(new Date()),1000)
+    return () => {
+      clearInterval(interval)
+      console.log("cleaning");
+    }
+  
+  }, []);
 
   return (
-    <header className='header'>
-      <h3 >Result University</h3>
+    <header className="header">
+      <h3>Result University</h3>
 
-    <span> Время сейчас:{now.toLocaleTimeString()}</span>
+      <span> Время сейчас:{now.toLocaleTimeString()}</span>
+    </header>
+  );
+};
 
-    </header >
-  )
-}
-
-export default Header
+export default Header;
