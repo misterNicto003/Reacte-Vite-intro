@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
+import { useInput } from "../../hooks/useInput";
 
 const EffectSection = () => {
+  const input = useInput();
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
 
-  const openModal = () => {
-    setModal(true);
-  };
-  
-  const closeModal = () => {
-    setModal(false);
-  };
+  async function fetchUsers() {
+    setLoading(true);
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const users = await response.json();
+    setUsers(users);
+    setLoading(false);
+  }
 
-  console.log(modal);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <section>
       <h3>Effect</h3>
 
-      <Button onClick={openModal}>Открыть информацию</Button>
+      <Button onClick={() => setModal(true)}>Открыть информацию</Button>
 
       <Modal open={modal}>
         <h3>Hello from modal</h3>
@@ -31,8 +37,22 @@ const EffectSection = () => {
           voluptates nihil quae?
         </p>
 
-        <Button onClick={closeModal} >Close Modal</Button>
+        <Button onClick={() => setModal(false)}>Close Modal</Button>
       </Modal>
+
+      {loading && <p>loading...</p>}
+      {!loading && (
+        <>
+          <input type="text" className="control" {...input} />
+          <ul>
+            {users
+              .filter((user) => user.name.toLowerCase().includes(input.value.toLowerCase()))
+              .map((user) => (
+                <li key={user.id}>{user.name}</li>
+              ))}
+          </ul>
+        </>
+      )}
     </section>
   );
 };
